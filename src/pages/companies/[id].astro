@@ -1,0 +1,28 @@
+---
+import SimpleLayout from '../../layouts/SimpleLayout.astro';
+import { companies } from '../../data/companies';
+import { SITE_TITLE } from '../../consts';
+import { format } from 'date-fns';
+
+export async function getStaticPaths() {
+  return companies.map(company => ({
+    params: { id: company.id },
+    props: { company }
+  }));
+}
+
+const { company } = Astro.props;
+---
+
+<SimpleLayout
+  title={`${company.name} - ${SITE_TITLE}`}
+  description={company.description}
+>
+  <div class="company-detail-page">
+    <!-- 公司详情内容保持不变 -->
+  </div>
+</SimpleLayout>
+
+<style>
+  /* 样式保持不变 */
+</style> 

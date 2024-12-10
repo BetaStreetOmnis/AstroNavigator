@@ -1,0 +1,42 @@
+---
+import Header from '../components/Header.astro';
+import BaseHead from '../components/BaseHead.astro';
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh">
+	<head>
+		<BaseHead title={title} description="消息中心" />
+	</head>
+	<body>
+		<Header />
+		<slot />
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		--accent: #3b82f6;
+		--gray-light: 229, 231, 235;
+		--gray-dark: 55, 65, 81;
+	}
+	html {
+		font-family: system-ui, sans-serif;
+		background: #f6f8fa;
+		background-size: 224px;
+	}
+	body {
+		margin: 0;
+		min-height: 100vh;
+	}
+	code {
+		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+			Bitstream Vera Sans Mono, Courier New, monospace;
+	}
+</style> 

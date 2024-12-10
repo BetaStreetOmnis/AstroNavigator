@@ -1,0 +1,120 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CompanyCard from '../../components/CompanyCard.astro';
+import { companies } from '../../data/companies';
+import { companyCategories } from '../../data/categories';
+
+// 获取当前分类
+const currentCategory = Astro.url.searchParams.get('category');
+
+// 根据分类筛选公司
+const filteredCompanies = currentCategory 
+  ? companies.filter(company => company.category === currentCategory)
+  : companies;
+
+// 获取当前分类的名称
+const currentCategoryName = currentCategory 
+  ? companyCategories.find(c => c.slug === currentCategory)?.name 
+  : 'All';
+---
+
+<BaseLayout 
+  title={`${currentCategoryName} - ${SITE_TITLE}`}
+  description={SITE_DESCRIPTION}
+  categories={companyCategories}
+  basePath="/companies"
+  activeCategory={currentCategory}
+>
+  <div class="companies-container">
+    <div class="flex flex-col gap-4 mb-6">
+      <div class="flex justify-between items-center">
+        <h1 class="text-3xl font-bold">
+          {currentCategoryName}
+        </h1>
+        <div class="search-container">
+          <input 
+            type="text" 
+            id="company-search" 
+            placeholder="搜索企业名称、描述或标签..."
+            class="px-4 py-2 rounded-lg border border-gray-200 focus:border-accent focus:ring-2 focus:ring-accent focus:ring-opacity-20 transition-all duration-200"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="companies-grid gap-6">
+      {filteredCompanies.map((company) => (
+        <CompanyCard company={company} />
+      ))}
+    </div>
+
+    {filteredCompanies.length === 0 && (
+      <div class="text-center py-8 text-gray-500">
+        No companies in this category
+      </div>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .companies-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .companies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
+  }
+  @media (max-width: 768px) {
+    .companies-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  // 只保留搜索功能
+  const searchInput = document.getElementById('company-search') as HTMLInputElement;
+  const companies = document.querySelectorAll('.company-card');
+
+  function filterCompanies() {
+    const searchTerm = searchInput.value.toLowerCase();
+    let visibleCount = 0;
+
+    companies.forEach(company => {
+      const name = company.querySelector('h3')?.textContent?.toLowerCase() || '';
+      const description = company.querySelector('p')?.textContent?.toLowerCase() || '';
+      const tags = Array.from(company.querySelectorAll('.tag'))
+        .map(tag => tag.textContent?.toLowerCase() || '');
+
+      const isVisible = 
+        name.includes(searchTerm) || 
+        description.includes(searchTerm) || 
+        tags.some(tag => tag.includes(searchTerm));
+
+      company.classList.toggle('hidden', !isVisible);
+      if (isVisible) visibleCount++;
+    });
+
+    const noResults = document.querySelector('.companies-grid');
+    if (noResults && visibleCount === 0) {
+      const existingMessage = document.querySelector('.no-results-message');
+      if (!existingMessage) {
+        noResults.insertAdjacentHTML('afterend', `
+          <div class="text-center py-8 text-gray-500 no-results-message">
+          </div>
+        `);
+      }
+    } else {
+      const existingMessage = document.querySelector('.no-results-message');
+      existingMessage?.remove();
+    }
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', filterCompanies);
+  }
+</script>

@@ -1,0 +1,352 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CompanyCard from '../../components/CompanyCard.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import { companies } from '../../data/companies';
+import { companyCategories } from '../../data/categories';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { format } from 'date-fns';
+
+export async function getStaticPaths() {
+  const paths = [];
+  
+  // 添加分类页面路径
+  companyCategories.forEach(category => {
+    paths.push({
+      params: { slug: category.slug },
+      props: { type: 'category', category, categories: companyCategories }
+    });
+  });
+
+  // 添加公司详情页面路径
+  companies.forEach(company => {
+    paths.push({
+      params: { slug: `detail/${company.id}` },
+      props: { type: 'detail', company, categories: companyCategories }
+    });
+  });
+
+  // 添加联系页面路径
+  companies.forEach(company => {
+    paths.push({
+      params: { slug: `detail/${company.id}/contact` },
+      props: { type: 'contact', company, categories: companyCategories }
+    });
+  });
+
+  return paths;
+}
+
+const { type, company, category, categories } = Astro.props;
+---
+
+<BaseLayout
+  title={type === 'category' ? `${category.name} - ${SITE_TITLE}` : 
+         type === 'detail' ? `${company.name} - ${SITE_TITLE}` :
+         `联系 ${company.name} - ${SITE_TITLE}`}
+  description={SITE_DESCRIPTION}
+  categories={categories}
+  basePath="/companies"
+>
+  {type === 'category' && (
+    <div class="companies-container">
+      <div class="flex flex-col gap-4 mb-6">
+        <div class="flex justify-between items-center">
+          <h1 class="text-3xl font-bold">{category.name}</h1>
+          <div class="search-container">
+            <input 
+              type="text" 
+              id="company-search" 
+              placeholder="搜索公司..."
+              class="px-4 py-2 rounded-lg border border-gray-200 focus:border-accent focus:ring-2 focus:ring-accent focus:ring-opacity-20 transition-all duration-200"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="companies-grid">
+        {companies.filter(c => c.category === category.slug).map((company) => (
+          <CompanyCard company={company} />
+        ))}
+      </div>
+    </div>
+  )}
+
+  {type === 'detail' && (
+    <div class="company-detail-page">
+      <div class="detail-card">
+        <h2 class="text-2xl font-bold mb-4">{company.name}</h2>
+        
+        <!-- 基本信息表格 -->
+        <div class="box-card">
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <table class="info-table">
+                <tbody>
+                  <tr>
+                    <th>公司名称</th>
+                    <td>{company.name}</td>
+                  </tr>
+                  {company.contact?.phone && (
+                    <tr>
+                      <th>联系电话</th>
+                      <td>{company.contact.phone}</td>
+                    </tr>
+                  )}
+                  {company.contact?.email && (
+                    <tr>
+                      <th>邮箱</th>
+                      <td>
+                        <div class="flex items-center">
+                          <i class="icon-message">📧</i>
+                          <a href={`mailto:${company.contact.email}`} class="hover:text-blue-600">
+                            {company.contact.email}
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                  {company.contact?.address && (
+                    <tr>
+                      <th>地址</th>
+                      <td>{company.contact.address}</td>
+                    </tr>
+                  )}
+                  {company.industry && (
+                    <tr>
+                      <th>行业</th>
+                      <td>{company.industry}</td>
+                    </tr>
+                  )}
+                  {company.leader && (
+                    <tr>
+                      <th>负责人</th>
+                      <td>{company.leader}</td>
+                    </tr>
+                  )}
+                  {company.website && (
+                    <tr>
+                      <th>网址</th>
+                      <td>
+                        <a href={company.website} target="_blank" rel="noopener noreferrer" 
+                          class="text-blue-600 hover:underline">
+                          {company.website}
+                        </a>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+
+            <div class="company-intro-card">
+              <div class="card-header">
+                <h3 class="text-xl font-bold">公司简介</h3>
+              </div>
+              <p class="company-intro">{company.description || '暂无'}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 公司历史 -->
+        {company.history && (
+          <div class="box-card mt-5">
+            <div class="card-header">
+              <h3 class="text-xl font-bold">公司历史</h3>
+            </div>
+            <p class="company-history">{company.history}</p>
+          </div>
+        )}
+
+        <!-- 产品列表 -->
+        {company.products && company.products.length > 0 && (
+          <div class="box-card mt-5">
+            <div class="card-header">
+              <h3 class="text-xl font-bold">产品列表</h3>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {company.products.map(product => (
+                <div class="product-item">
+                  <span class="product-dot">•</span>
+                  {product}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- 公司新闻 -->
+        {company.news && company.news.length > 0 && (
+          <div class="box-card mt-5">
+            <div class="card-header">
+              <h3 class="text-xl font-bold">公司新闻</h3>
+            </div>
+            <div class="news-grid">
+              {company.news.map(item => (
+                <div class="news-item">
+                  <div class="news-date">
+                    {format(item.date, 'yyyy-MM-dd')}
+                  </div>
+                  <div class="news-content">
+                    <h4 class="news-title">{item.title}</h4>
+                    <p class="news-text">{item.content}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )}
+
+  {type === 'contact' && (
+    <div class="contact-page">
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-xl shadow-sm p-8">
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="space-y-6">
+              <div class="flex items-center gap-4">
+                <div class="company-logo">
+                  {company.name.charAt(0).toUpperCase()}
+                </div>
+                <h1 class="text-2xl font-bold text-gray-800">{company.name}</h1>
+              </div>
+
+              <div class="space-y-4">
+                {company.contact?.phone && (
+                  <div class="contact-item">
+                    <span class="contact-icon">📞</span>
+                    <a href={`tel:${company.contact.phone}`} class="contact-link">
+                      {company.contact.phone}
+                    </a>
+                  </div>
+                )}
+                {company.contact?.email && (
+                  <div class="contact-item">
+                    <span class="contact-icon">📧</span>
+                    <a href={`mailto:${company.contact.email}`} class="contact-link">
+                      {company.contact.email}
+                    </a>
+                  </div>
+                )}
+                {company.contact?.address && (
+                  <div class="contact-item">
+                    <span class="contact-icon">📍</span>
+                    <span class="text-gray-600">{company.contact.address}</span>
+                  </div>
+                )}
+              </div>
+
+              <div class="tag-container">
+                {company.tags.map(tag => (
+                  <span class="tag">{tag.name}</span>
+                ))}
+              </div>
+            </div>
+
+            <div class="space-y-6">
+              <h2 class="text-xl font-bold text-gray-800 mb-6">发送邮件</h2>
+              <ContactForm 
+                companyEmail={company.contact?.email}
+                companyName={company.name}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+</BaseLayout>
+
+<style>
+  .companies-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .companies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
+  }
+  @media (max-width: 768px) {
+    .companies-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* 联系页面样式 */
+  .company-logo {
+    @apply w-12 h-12 flex items-center justify-center bg-blue-100 text-blue-600 rounded-lg text-2xl font-bold;
+  }
+
+  .contact-item {
+    @apply flex items-center gap-3;
+  }
+
+  .contact-icon {
+    @apply text-xl;
+  }
+
+  .contact-link {
+    @apply text-blue-600 hover:underline;
+  }
+
+  .tag-container {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .tag {
+    display: inline-block;
+    border: 1px solid #d0d7de;
+    color: #0366d6;
+    padding: 5px 10px;
+    margin: 2px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    background-color: #fff;
+  }
+
+  .tag:hover {
+    background-color: #f6f8fa;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+</style>
+
+<script>
+  const searchInput = document.getElementById('company-search') as HTMLInputElement;
+  const companies = document.querySelectorAll('.company-card');
+  const noResults = document.getElementById('no-results');
+
+  function filterCompanies() {
+    const searchTerm = searchInput.value.toLowerCase();
+    let visibleCount = 0;
+
+    companies.forEach(company => {
+      const name = company.querySelector('h3')?.textContent?.toLowerCase() || '';
+      const description = company.querySelector('p')?.textContent?.toLowerCase() || '';
+      const tags = Array.from(company.querySelectorAll('.text-gray-600'))
+        .map(tag => tag.textContent?.toLowerCase() || '');
+
+      const isVisible = 
+        name.includes(searchTerm) || 
+        description.includes(searchTerm) || 
+        tags.some(tag => tag.includes(searchTerm));
+
+      company.classList.toggle('hidden', !isVisible);
+      if (isVisible) visibleCount++;
+    });
+
+    if (noResults) {
+      noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', filterCompanies);
+  }
+</script> 

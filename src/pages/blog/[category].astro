@@ -1,0 +1,90 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../../components/FormattedDate.astro';
+import { blogCategories } from '../../data/categories';
+
+export function getStaticPaths() {
+  return blogCategories.map(category => ({
+    params: { category: category.slug },
+    props: { category },
+  }));
+}
+
+const { category } = Astro.props;
+const posts = (await getCollection('blog'))
+  .filter(post => post.data.category === category.slug)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout 
+  title={`${category.name} - ${SITE_TITLE}`}
+  description={category.description || SITE_DESCRIPTION}
+  categories={blogCategories}
+  activeCategory={category.slug}
+  basePath="/blog"
+>
+  <section>
+    <h1>{category.name}</h1>
+    <p class="category-description">{category.description}</p>
+    <ul class="posts-grid">
+      {posts.map((post) => (
+        <li>
+          <a href={`/blog/${post.slug}/`}>
+            <img width={720} height={360} src={post.data.heroImage} alt="" />
+            <h4 class="title">{post.data.title}</h4>
+            <p class="date">
+              <FormattedDate date={post.data.pubDate} />
+            </p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .category-description {
+    color: rgb(var(--gray));
+    margin-bottom: 2rem;
+  }
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  .posts-grid li {
+    margin-bottom: 1rem;
+  }
+  .posts-grid li a {
+    display: block;
+    text-decoration: none;
+    transition: 0.2s ease;
+  }
+  .posts-grid li img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin-bottom: 0.5rem;
+  }
+  .title {
+    margin: 0;
+    color: rgb(var(--black));
+    line-height: 1;
+    font-size: 1.5rem;
+  }
+  .date {
+    margin: 0;
+    color: rgb(var(--gray));
+  }
+  .posts-grid li a:hover .title {
+    color: var(--accent);
+  }
+  .posts-grid li a:hover img {
+    box-shadow: var(--box-shadow);
+  }
+</style>

@@ -1,0 +1,73 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { linkCategories } from '../../data/categories';
+import { links } from '../../data/links';
+
+export function getStaticPaths() {
+  return linkCategories.map(category => ({
+    params: { category: category.slug },
+    props: { category },
+  }));
+}
+
+const { category } = Astro.props;
+const filteredLinks = links.filter(link => link.category === category.slug);
+---
+
+<BaseLayout 
+  title={`${category.name} - ${SITE_TITLE}`}
+  description={category.description || SITE_DESCRIPTION}
+  categories={linkCategories}
+  activeCategory={category.slug}
+  basePath="/links"
+>
+  <div class="links-container">
+    <h1>{category.name}</h1>
+    <p class="category-description">{category.description}</p>
+    <div class="links-grid">
+      {filteredLinks.map((link) => (
+        <a href={link.url} class="link-card" target="_blank" rel="noopener noreferrer">
+          <h3 class="link-title">{link.title}</h3>
+          <p class="link-description">{link.description}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .links-container {
+    width: 100%;
+  }
+  .category-description {
+    color: rgb(var(--gray));
+    margin-bottom: 2rem;
+  }
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .link-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+    transition: transform 0.2s ease;
+    text-decoration: none;
+  }
+  .link-card:hover {
+    transform: translateY(-3px);
+  }
+  .link-title {
+    color: var(--accent);
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  .link-description {
+    color: rgb(var(--gray));
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+</style>

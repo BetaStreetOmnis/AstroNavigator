@@ -1,0 +1,326 @@
+---
+import BaseHead from '../components/BaseHead.astro'; 
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+const links = [
+  {
+    category: "Development",
+    items: [
+      { title: "GitHub", url: "https://github.com", description: "World's largest software development platform" },
+      { title: "Stack Overflow", url: "https://stackoverflow.com", description: "Developer knowledge sharing and community" },
+      { title: "MDN Web Docs", url: "https://developer.mozilla.org", description: "Resources by developers, for developers" },
+      { title: "CodePen", url: "https://codepen.io", description: "Frontend code sharing platform" },
+      { title: "Dev.to", url: "https://dev.to", description: "Developer technical community" }
+    ]
+  },
+  {
+    category: "Design", 
+    items: [
+      { title: "Dribbble", url: "https://dribbble.com", description: "Design inspiration and resources" },
+      { title: "Behance", url: "https://www.behance.net", description: "Showcase and explore creative work" },
+      { title: "Figma", url: "https://www.figma.com", description: "Collaborative interface design tool" },
+      { title: "Awwwards", url: "https://www.awwwards.com", description: "Web design awards and inspiration" },
+      { title: "Pinterest", url: "https://www.pinterest.com", description: "Visual creative inspiration platform" }
+    ]
+  },
+  {
+    category: "Learning",
+    items: [
+      { title: "freeCodeCamp", url: "https://www.freecodecamp.org", description: "Learn programming for free" },
+      { title: "Coursera", url: "https://www.coursera.org", description: "Online courses from top universities" },
+      { title: "Udemy", url: "https://www.udemy.com", description: "Online learning marketplace" },
+      { title: "edX", url: "https://www.edx.org", description: "High quality online education platform" },
+      { title: "Khan Academy", url: "https://www.khanacademy.org", description: "Free educational resources" }
+    ]
+  }
+];
+---
+
+<!doctype html>
+<html lang="zh">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<link rel="shortcut icon" href="./assets/images/favicon.png">
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		
+		<script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?c05bb16ea908292af9f6c513087a1cc3";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+		</script>
+		<script>
+		(adsbygoogle = window.adsbygoogle || []).push({
+			google_ad_client: "ca-pub-8550836177608334",
+			enable_page_level_ads: true
+		});
+		</script>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="author" content="viggo" />
+		<title>WebStack.cc - Designer's Navigation</title>
+		<meta name="keywords" content="UI Design, UI Design Resources, Design Navigation, Web Directory, Design Resources, Creative Navigation, Creative Website Directory, Designer's Website Collection, Design Materials, Designer Navigation, UI Design Resources, Outstanding UI Design, Designer's Guide, Designer's Website Directory, Product Manager Navigation, UX Designer Navigation, www.webstack.cc">
+		<meta name="description" content="WebStack - Collection of excellent design websites, UI design resource sites, creative inspiration sites, and Resources sites. Regularly updated to share quality product design bookmarks. www.webstack.cc">
+		
+		<!-- FB Open Graph -->
+		<meta property="og:type" content="article">
+		<meta property="og:url" content="http://www.webstack.cc/">
+		<meta property="og:title" content="WebStack - Collection of excellent design websites, UI design resource sites, creative inspiration sites, and Resources sites. Regularly updated to share quality product design bookmarks. www.webstack.cc">
+		<meta property="og:description" content="UI Design, UI Design Resources, Design Navigation, Web Directory, Design Resources, Creative Navigation, Creative Website Directory, Designer's Website Collection, Design Materials, Designer Navigation, UI Design Resources, Outstanding UI Design, Designer's Guide, Designer's Website Directory, Product Manager Navigation, UX Designer Navigation, www.webstack.cc">
+		<meta property="og:image" content="http://www.webstack.cc/assets/images/webstack_banner_cn.png">
+		<meta property="og:site_name" content="WebStack - Collection of excellent design websites, UI design resource sites, creative inspiration sites, and Resources sites. Regularly updated to share quality product design bookmarks. www.webstack.cc">
+		<!-- Twitter Cards -->
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:title" content="WebStack - Collection of excellent design websites, UI design resource sites, creative inspiration sites, and Resources sites. Regularly updated to share quality product design bookmarks. www.webstack.cc">
+		<meta name="twitter:description" content="UI Design, UI Design Resources, Design Navigation, Web Directory, Design Resources, Creative Navigation, Creative Website Directory, Designer's Website Collection, Design Materials, Designer Navigation, UI Design Resources, Outstanding UI Design, Designer's Guide, Designer's Website Directory, Product Manager Navigation, UX Designer Navigation, www.webstack.cc">
+		<meta name="twitter:image" content="http://www.webstack.cc/assets/images/webstack_banner_cn.png">
+		<style>
+			:root {
+				--accent: #9370DB; /* 改为紫色 */
+				--accent-gradient: linear-gradient(45deg, #9370DB, #BA55D3); /* 添加紫色渐变 */
+			}
+			
+			.page-container {
+				display: flex;
+				max-width: 1600px;
+				margin: 0 auto;
+				padding: 2rem;
+				gap: 2rem;
+			}
+			
+			.sidebar {
+				width: 220px;
+				flex-shrink: 0;
+				background: #f8f9fa;
+				border-radius: 16px;
+				padding: 2rem;
+				height: fit-content;
+				position: sticky;
+				top: 2rem;
+				box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+			}
+
+			.category-nav {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+
+			.category-nav li {
+				margin-bottom: 1rem;
+			}
+
+			.category-nav a {
+				display: block;
+				padding: 1rem 1.2rem;
+				color: #4a5568;
+				text-decoration: none;
+				border-radius: 10px;
+				transition: all 0.3s;
+				font-weight: 500;
+				background: white;
+				box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+			}
+
+			.category-nav a:hover,
+			.category-nav a.active {
+				background: var(--accent-gradient);
+				color: white;
+				transform: translateY(-2px);
+				box-shadow: 0 4px 12px rgba(147,112,219,0.3);
+			}
+
+			.main-content {
+				flex: 1;
+			}
+
+			.links-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+				gap: 2rem;
+			}
+
+			.link-card {
+				background: white;
+				padding: 2rem;
+				border-radius: 16px;
+				box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+				transition: all 0.4s ease;
+				border: 1px solid #eef2f7;
+				display: flex;
+				flex-direction: column;
+				text-decoration: none;
+				position: relative;
+				overflow: hidden;
+			}
+
+			.link-card:hover {
+				transform: translateY(-6px);
+				box-shadow: 0 12px 30px rgba(147,112,219,0.15);
+				border-color: var(--accent);
+			}
+
+			.link-card::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 4px;
+				background: var(--accent-gradient);
+				transform: scaleX(0);
+				transition: transform 0.3s ease;
+			}
+
+			.link-card:hover::before {
+				transform: scaleX(1);
+			}
+
+			.link-title {
+				color: var(--accent);
+				font-size: 1.5rem;
+				font-weight: 600;
+				margin-bottom: 1rem;
+				position: relative;
+				padding-bottom: 0.5rem;
+			}
+
+			.link-title::after {
+				content: '';
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 40px;
+				height: 3px;
+				background: var(--accent-gradient);
+				opacity: 0.5;
+			}
+
+			.link-description {
+				color: #4a5568;
+				font-size: 1.1rem;
+				line-height: 1.6;
+				flex-grow: 1;
+			}
+
+			.category-title {
+				font-size: 3.5rem;
+				background: var(--accent-gradient);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				margin-bottom: 2.5rem;
+				padding-bottom: 1.5rem;
+				position: relative;
+				text-transform: uppercase;
+				letter-spacing: 3px;
+				font-weight: 900;
+				text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+				font-family: 'Montserrat', sans-serif;
+			}
+
+			.category-title::after {
+				content: '';
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 150px;
+				height: 8px;
+				background: var(--accent-gradient);
+				border-radius: 4px;
+				opacity: 0.8;
+			}
+
+			@media (max-width: 768px) {
+				.page-container {
+					flex-direction: column;
+				}
+				.sidebar {
+					width: 100%;
+					position: static;
+				}
+				.links-grid {
+					grid-template-columns: 1fr;
+				}
+				.category-title {
+					font-size: 2.5rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<div class="page-container">
+			<aside class="sidebar">
+				<nav>
+					<ul class="category-nav">
+						{links.map((category) => (
+							<li>
+								<a href={`#${category.category.toLowerCase()}`}>{category.category}</a>
+							</li>
+						))}
+					</ul>
+				</nav>
+			</aside>
+			<main class="main-content">
+				{links.map((category) => (
+					<section id={category.category.toLowerCase()}>
+						<h2 class="category-title">{category.category}</h2>
+						<div class="links-grid">
+							{category.items.map((link) => (
+								<a href={link.url} class="link-card" target="_blank" rel="noopener noreferrer">
+									<h3 class="link-title">{link.title}</h3>
+									<p class="link-description">{link.description}</p>
+								</a>
+							))}
+						</div>
+					</section>
+				))}
+			</main>
+		</div>
+		<Footer />
+		<script>
+			// 添加平滑滚动效果
+			document.querySelectorAll('.category-nav a').forEach(anchor => {
+				anchor.addEventListener('click', function(e) {
+					e.preventDefault();
+					const targetId = this.getAttribute('href');
+					document.querySelector(targetId).scrollIntoView({
+						behavior: 'smooth'
+					});
+				});
+			});
+
+			// 监听滚动以高亮当前分类
+			window.addEventListener('scroll', () => {
+				const sections = document.querySelectorAll('section');
+				const navLinks = document.querySelectorAll('.category-nav a');
+
+				sections.forEach(section => {
+					const rect = section.getBoundingClientRect();
+					if (rect.top <= 100 && rect.bottom >= 100) {
+						const id = `#${section.id}`;
+						navLinks.forEach(link => {
+							link.classList.toggle('active', link.getAttribute('href') === id);
+						});
+					}
+				});
+			});
+		</script>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111463289-1"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+		gtag('config', 'UA-111463289-1');
+		</script>
+	</body>
+</html>

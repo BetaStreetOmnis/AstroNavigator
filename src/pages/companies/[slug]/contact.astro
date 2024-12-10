@@ -1,0 +1,18 @@
+---
+import { SITE_TITLE } from '../../../consts';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ContactForm from '../../../components/ContactForm.astro';
+import { companies } from '../../../data/companies';
+import { companyCategories } from '../../../data/categories';
+
+export function getStaticPaths() {
+  return companies.map(company => ({
+    params: { slug: company.name.toLowerCase().replace(/\s+/g, '-') },
+    props: { company },
+  }));
+}
+
+const { company } = Astro.props;
+---
+
+// ... 其余内容保持不变 

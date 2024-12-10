@@ -1,0 +1,56 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Welcome to Our Information Platform</h1>
+			<p>
+				This is a comprehensive information platform built with <a href="https://astro.build/">Astro</a>. 
+				Our platform provides organized access to various types of content including company information, 
+				news updates, and categorized messages.
+			</p>
+			<p>
+				Key Features:
+			</p>
+			<ul>
+				<li>Navigation System: Easy-to-use category-based navigation</li>
+				<li>Company Directory: Organized listing of companies across different sectors</li>
+				<li>Message: Real-time updates and important announcements</li>
+				<li>Blog Section: In-depth articles and analysis</li>
+				<li>Category Management: Content organized by relevant categories</li>
+			</ul>
+			<p>
+				Our platform includes:
+			</p>
+			<ul>
+				<li>Company Categories: Manufacturing, Technology, Service, and Research institutions</li>
+				<li>Message Categories: AI News, Development Updates, Data Science, Security, and Cloud Computing</li>
+				<li>Blog Categories: AI & Machine Learning, Data Science, Web Development, and Programming</li>
+			</ul>
+			<p>
+				Built with Astro.js, this platform offers:
+			</p>
+			<ul>
+				<li>Fast page loads with static site generation</li>
+				<li>Responsive and user-friendly interface</li>
+				<li>Easy content management and updates</li>
+				<li>Efficient category-based content organization</li>
+			</ul>
+			<p>
+				Explore our platform to discover valuable information across various domains and stay updated 
+				with the latest developments in technology and business.
+			</p>
+		</main>
+		<Footer />
+	</body>
+</html>

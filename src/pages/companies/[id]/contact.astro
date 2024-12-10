@@ -1,0 +1,122 @@
+---
+import { SITE_TITLE } from '../../../consts';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ContactForm from '../../../components/ContactForm.astro';
+import { companies } from '../../../data/companies';
+import { companyCategories } from '../../../data/categories';
+
+export function getStaticPaths() {
+  return companies.map(company => ({
+    params: { id: company.id },
+    props: { company },
+  }));
+}
+
+const { company } = Astro.props;
+---
+
+<BaseLayout 
+  title={`联系 ${company.name} - ${SITE_TITLE}`}
+  description={`联系 ${company.name}`}
+  categories={companyCategories}
+  basePath="/companies"
+>
+  <div class="max-w-4xl mx-auto">
+    <div class="bg-white rounded-xl shadow-sm p-8">
+      <div class="grid md:grid-cols-2 gap-8">
+        {/* 左侧公司信息 */}
+        <div class="space-y-6">
+          <div class="flex items-center gap-4">
+            <div class="company-logo">
+              {company.name.charAt(0).toUpperCase()}
+            </div>
+            <h1 class="text-2xl font-bold text-gray-800">{company.name}</h1>
+          </div>
+
+          <div class="space-y-4">
+            {company.contact?.phone && (
+              <div class="contact-item">
+                <span class="contact-icon">📞</span>
+                <a href={`tel:${company.contact.phone}`} class="contact-link">
+                  {company.contact.phone}
+                </a>
+              </div>
+            )}
+            {company.contact?.email && (
+              <div class="contact-item">
+                <span class="contact-icon">📧</span>
+                <a href={`mailto:${company.contact.email}`} class="contact-link">
+                  {company.contact.email}
+                </a>
+              </div>
+            )}
+            {company.contact?.address && (
+              <div class="contact-item">
+                <span class="contact-icon">📍</span>
+                <span class="text-gray-600">{company.contact.address}</span>
+              </div>
+            )}
+          </div>
+
+          <div class="tag-container">
+            {company.tags.map(tag => (
+              <span class="tag">{tag.name}</span>
+            ))}
+          </div>
+
+          <p class="text-gray-600">{company.description}</p>
+        </div>
+
+        {/* 右侧联系表单 */}
+        <div class="bg-gray-50 p-6 rounded-xl">
+          <h2 class="text-xl font-bold text-gray-800 mb-6">发送邮件</h2>
+          <ContactForm 
+            companyEmail={company.contact?.email}
+            companyName={company.name}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .company-logo {
+    @apply w-12 h-12 flex items-center justify-center bg-blue-100 text-blue-600 rounded-lg text-2xl font-bold;
+  }
+
+  .contact-item {
+    @apply flex items-center gap-3;
+  }
+
+  .contact-icon {
+    @apply text-xl;
+  }
+
+  .contact-link {
+    @apply text-blue-600 hover:underline;
+  }
+
+  .tag-container {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .tag {
+    display: inline-block;
+    border: 1px solid #d0d7de;
+    color: #0366d6;
+    padding: 5px 10px;
+    margin: 2px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    background-color: #fff;
+  }
+
+  .tag:hover {
+    background-color: #f6f8fa;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+</style>

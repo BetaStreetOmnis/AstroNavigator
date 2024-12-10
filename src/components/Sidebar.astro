@@ -1,0 +1,78 @@
+---
+import type { Category } from '../types';
+
+interface Props {
+  categories: Category[];
+  activeCategory?: string | null;
+  basePath: string;
+}
+
+const { categories, activeCategory, basePath } = Astro.props;
+---
+
+<aside class="sidebar">
+  <nav>
+    <a 
+      href={basePath}
+      class={`sidebar-link ${!activeCategory ? 'active' : ''}`}
+    >
+      All
+    </a>
+    
+    {categories.map((category) => (
+      <a
+        href={`${basePath}/category/${category.slug}`}
+        class={`sidebar-link ${category.slug === activeCategory ? 'active' : ''}`}
+      >
+        {category.name}
+      </a>
+    ))}
+  </nav>
+</aside>
+
+<style>
+  .sidebar {
+    width: 250px;
+    padding: 2rem 1rem;
+    border-right: 1px solid rgb(var(--gray-light));
+  }
+  nav {
+    position: sticky;
+    top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .sidebar-link {
+    width: 100%;
+    text-align: left;
+    padding: 0.5rem 1rem;
+    color: rgb(var(--gray-dark));
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    display: block;
+  }
+  .sidebar-link:hover {
+    background: rgba(var(--gray-light), 0.5);
+  }
+  .sidebar-link.active {
+    background: var(--accent);
+    color: white;
+  }
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid rgb(var(--gray-light));
+      padding: 1rem;
+    }
+    nav {
+      position: relative;
+      top: 0;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+</style>
+

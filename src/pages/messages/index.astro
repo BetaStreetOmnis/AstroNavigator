@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MessageCard from '../../components/MessageCard.astro';
+import { messages } from '../../data/messages';
+import { messageCategories } from '../../data/categories';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+
+const sortedMessages = messages.sort((a, b) => b.date.getTime() - a.date.getTime());
+---
+
+<BaseLayout
+  title={`Message Center - ${SITE_TITLE}`}
+  description={SITE_DESCRIPTION}
+  categories={messageCategories}
+  basePath="/messages"
+>
+  <div class="messages-grid">
+    {sortedMessages.map((message) => (
+      <MessageCard message={message} />
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .messages-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+</style>

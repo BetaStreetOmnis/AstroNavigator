@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import MessageCard from '../../../components/MessageCard.astro';
+import { messages } from '../../../data/messages';
+import { messageCategories } from '../../../data/categories';
+import { SITE_TITLE } from '../../../consts';
+
+export function getStaticPaths() {
+  return messageCategories.map(category => ({
+    params: { category: category.slug },
+    props: { category }
+  }));
+}
+
+const { category } = Astro.props;
+
+// 根据分类筛选消息
+const filteredMessages = messages
+  .filter(message => message.category === category.slug)
+  .sort((a, b) => b.date.getTime() - a.date.getTime());
+---
+
+<BaseLayout 
+  title={`${category.name} - ${SITE_TITLE}`}
+  description={category.description}
+  categories={messageCategories}
+  activeCategory={category.slug}
+  basePath="/messages"
+>
+  <div class="messages-grid">
+    {filteredMessages.map((message) => (
+      <MessageCard message={message} />
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .messages-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+</style> 

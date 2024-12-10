@@ -1,0 +1,101 @@
+---
+import type { Company } from '../types';
+
+interface Props {
+  company: Company;
+}
+
+const { company } = Astro.props;
+---
+
+<div class="company-card bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+  <div class="flex justify-between items-start mb-4">
+    <div class="flex items-center gap-4">
+      <div class="w-8 h-8 flex items-center justify-center bg-blue-100 text-blue-600 rounded-lg font-bold">
+      </div>
+      <h3 class="text-xl font-bold text-gray-800">{company.name}</h3>
+    </div>
+    <div class="tag-container">
+      {company.tags.map(tag => (
+        <span class="tag">
+          {tag.name}
+        </span>
+      ))}
+    </div>
+  </div>
+  
+  <p class="text-gray-600 mb-6">{company.description}</p>
+  
+  <div class="flex gap-4 mt-auto">
+    {company.website && (
+      <a 
+        href={company.website} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        class="flex-1 inline-flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-300"
+      >
+        <span class="mr-2">🌐</span>
+        访问网站
+      </a>
+    )}
+    
+    {company.contact?.email && (
+      <a 
+        href={`/companies/detail/${company.id}/contact`}
+        class="flex-1 inline-flex items-center justify-center px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-300"
+      >
+        <span class="mr-2">📧</span>
+        联系我们
+      </a>
+    )}
+    
+    <a 
+      href={`/companies/detail/${company.id}`}
+      class="flex-1 inline-flex items-center justify-center px-4 py-2 border-2 border-blue-500 text-blue-500 rounded-lg hover:bg-blue-50 transition-colors duration-300"
+    >
+      <span class="mr-2">👉</span>
+      查看详情
+    </a>
+  </div>
+</div>
+
+<style>
+  .company-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .company-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .tag-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    display: inline-block;
+    border: 1px solid #d0d7de;
+    color: #0366d6;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    background-color: #fff;
+  }
+
+  .tag:hover {
+    background-color: #f6f8fa;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    color: #0969da;
+    border-color: #0969da;
+  }
+</style>

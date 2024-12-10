@@ -1,0 +1,249 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { companies } from '../../../data/companies';
+import { companyCategories } from '../../../data/categories';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../../consts';
+import { format } from 'date-fns';
+
+export async function getStaticPaths() {
+  return companies.map(company => ({
+    params: { id: company.id },
+    props: { company }
+  }));
+}
+
+const { company } = Astro.props;
+---
+
+<BaseLayout
+  title={`${company.name} - ${SITE_TITLE}`}
+  description={company.description}
+  categories={companyCategories}
+  basePath="/companies"
+>
+  <div class="company-detail-page">
+    <div class="detail-card">
+      <h2 class="text-2xl font-bold mb-4">{company.name}</h2>
+      
+      <!-- 基本信息表格 -->
+      <div class="box-card">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <table class="info-table">
+              <tbody>
+                <tr>
+                  <th>公司名称</th>
+                  <td>{company.name}</td>
+                </tr>
+                {company.contact?.phone && (
+                  <tr>
+                    <th>联系电话</th>
+                    <td>{company.contact.phone}</td>
+                  </tr>
+                )}
+                {company.contact?.email && (
+                  <tr>
+                    <th>邮箱</th>
+                    <td>
+                      {Array.isArray(company.contact.email) ? (
+                        <ul class="email-list">
+                          {company.contact.email.map(email => (
+                            <li>
+                              <i class="icon-message">📧</i>
+                              <a href={`mailto:${email}`} class="hover:text-blue-600">{email}</a>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <div class="flex items-center">
+                          <i class="icon-message">📧</i>
+                          <a href={`mailto:${company.contact.email}`} class="hover:text-blue-600">
+                            {company.contact.email}
+                          </a>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                )}
+                {company.contact?.address && (
+                  <tr>
+                    <th>地址</th>
+                    <td>{company.contact.address}</td>
+                  </tr>
+                )}
+                {company.industry && (
+                  <tr>
+                    <th>行业</th>
+                    <td>{company.industry}</td>
+                  </tr>
+                )}
+                {company.leader && (
+                  <tr>
+                    <th>负责人</th>
+                    <td>{company.leader}</td>
+                  </tr>
+                )}
+                {company.website && (
+                  <tr>
+                    <th>网址</th>
+                    <td>
+                      <a href={company.website} target="_blank" rel="noopener noreferrer" 
+                        class="text-blue-600 hover:underline">
+                        {company.website}
+                      </a>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="company-intro-card">
+            <div class="card-header">
+              <h3 class="text-xl font-bold">公司简介</h3>
+            </div>
+            <p class="company-intro">{company.description || '暂无'}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 公司历史 -->
+      {company.history && (
+        <div class="box-card mt-5">
+          <div class="card-header">
+            <h3 class="text-xl font-bold">公司历史</h3>
+          </div>
+          <p class="company-history">{company.history}</p>
+        </div>
+      )}
+
+      <!-- 产品列表 -->
+      {company.products && company.products.length > 0 && (
+        <div class="box-card mt-5">
+          <div class="card-header">
+            <h3 class="text-xl font-bold">产品列表</h3>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {company.products.map(product => (
+              <div class="product-item">
+                <span class="product-dot">•</span>
+                {product}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- 公司新闻 -->
+      {company.news && company.news.length > 0 && (
+        <div class="box-card mt-5">
+          <div class="card-header">
+            <h3 class="text-xl font-bold">公司新闻</h3>
+          </div>
+          <div class="news-grid">
+            {company.news.map(item => (
+              <div class="news-item">
+                <div class="news-date">
+                  {format(item.date, 'yyyy-MM-dd')}
+                </div>
+                <div class="news-content">
+                  <h4 class="news-title">{item.title}</h4>
+                  <p class="news-text">{item.content}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .company-detail-page {
+    padding: 20px;
+  }
+
+  .detail-card {
+    @apply bg-white rounded-lg shadow-sm p-6;
+  }
+
+  .box-card {
+    @apply bg-white rounded-lg shadow-sm p-6;
+    margin-bottom: 20px;
+  }
+
+  /* 表格样式 */
+  .info-table {
+    @apply w-full;
+  }
+
+  .info-table th,
+  .info-table td {
+    @apply px-4 py-3 text-left border-b border-gray-200;
+  }
+
+  .info-table th {
+    @apply w-24 text-gray-600 font-medium bg-gray-50;
+  }
+
+  .info-table td {
+    @apply text-gray-800;
+  }
+
+  /* 邮箱列表样式 */
+  .email-list {
+    @apply space-y-1;
+  }
+
+  .email-list li {
+    @apply flex items-center gap-2;
+  }
+
+  /* 产品列表样式 */
+  .product-item {
+    @apply flex items-center gap-2 p-3 bg-gray-50 rounded-lg;
+  }
+
+  .product-dot {
+    @apply text-blue-500 text-xl;
+  }
+
+  /* 新闻样式 */
+  .news-grid {
+    @apply space-y-4;
+  }
+
+  .news-item {
+    @apply flex gap-4 p-4 bg-gray-50 rounded-lg;
+  }
+
+  .news-date {
+    @apply text-sm text-gray-500 whitespace-nowrap;
+  }
+
+  .news-content {
+    @apply flex-1;
+  }
+
+  .news-title {
+    @apply text-lg font-bold text-gray-800 mb-2;
+  }
+
+ .news-text {
+    @apply text-gray-600;
+  }
+
+  .company-intro-card {
+    @apply bg-gray-50 p-6 rounded-lg;
+  }
+
+  .company-intro,
+  .company-history {
+    @apply text-gray-600 leading-relaxed;
+  }
+
+  .icon-message {
+    @apply mr-2;
+  }
+</style>

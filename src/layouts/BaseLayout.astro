@@ -1,0 +1,58 @@
+---
+import Header from '../components/Header.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Sidebar from '../components/Sidebar.astro';
+import type { Category } from '../types';
+
+interface Props {
+	title: string;
+	description: string;
+	categories: Category[];
+	activeCategory?: string;
+	basePath: string;
+}
+
+const { title, description, categories = [], activeCategory, basePath } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh">
+	<head>
+		<BaseHead title={title} description={description} />
+	</head>
+	<body>
+		<Header />
+		<div class="container">
+			{categories.length > 0 && (
+				<Sidebar 
+					categories={categories}
+					activeCategory={activeCategory}
+					basePath={basePath}
+				/>
+			)}
+			<main>
+				<slot />
+			</main>
+		</div>
+	</body>
+</html>
+
+<style>
+	.container {
+		display: flex;
+		gap: 2rem;
+		padding: 2rem;
+		max-width: 1400px;
+		margin: 0 auto;
+	}
+	main {
+		flex: 1;
+		min-width: 0; /* 防止flex子项溢出 */
+	}
+	@media (max-width: 768px) {
+		.container {
+			flex-direction: column;
+			padding: 1rem;
+		}
+	}
+</style>
