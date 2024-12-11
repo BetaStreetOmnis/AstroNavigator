@@ -6,6 +6,8 @@ A comprehensive information platform built with Astro, featuring AI-related blog
 
 > 🤖 **Welcome to AI Info Navigator!** A one-stop platform for AI-related information.
 
+🌐 **Demo**: [https://astronavigator-5s.pages.dev/blog/](https://astronavigator-5s.pages.dev/blog/)
+
 ## 🎯 Project Purpose
 
 This project was born out of a need for better navigation and organization of AI-related content. While exploring Astro templates, we found that existing solutions lacked proper navigation capabilities and blog categorization features. Most blog templates were either too simple or couldn't effectively categorize content. Therefore, we built and open-sourced this project to provide a comprehensive, well-organized platform for AI information.
