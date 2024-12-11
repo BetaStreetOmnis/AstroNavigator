@@ -4,6 +4,7 @@ import MessageCard from '../../components/MessageCard.astro';
 import { messages } from '../../data/messages';
 import { messageCategories } from '../../data/categories';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import Footer from '../../components/Footer.astro';
 
 const sortedMessages = messages.sort((a, b) => b.date.getTime() - a.date.getTime());
 ---
@@ -19,6 +20,7 @@ const sortedMessages = messages.sort((a, b) => b.date.getTime() - a.date.getTime
       <MessageCard message={message} />
     ))}
   </div>
+  <Footer />
 </BaseLayout>
 
 <style>

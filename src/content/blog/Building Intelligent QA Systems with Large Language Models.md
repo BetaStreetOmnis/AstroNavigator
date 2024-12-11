@@ -2,7 +2,7 @@
 title: 'Building Intelligent QA Systems with Large Language Models'
 description: 'A comprehensive guide to developing advanced question-answering systems using LangChain, vector databases, and embedding models'
 pubDate: 'Apr 08 2024'
-heroImage: '/d8331d63d6fc4fd09ed27b0f283adc36.png'
+heroImage: '/images/d8331d63d6fc4fd09ed27b0f283adc36.png'
 category: 'ai'
 ---
 

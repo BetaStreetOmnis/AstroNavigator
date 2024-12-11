@@ -2,7 +2,7 @@
 title: 'Building a Resource-Efficient Semantic Search System'
 description: 'A comprehensive guide on implementing lightweight semantic search using Milvus Lite and GTE vector model, running on just 1GB RAM'
 pubDate: 'Oct 20 2024'
-heroImage: '/d8331d63d6fc4fd09ed27b0f283adc36.png'
+heroImage: '/images/d8331d63d6fc4fd09ed27b0f283adc36.png'
 category: 'ai-ml'
 ---
 

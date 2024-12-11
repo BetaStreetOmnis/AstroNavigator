@@ -10,7 +10,7 @@ import { format } from 'date-fns';
 export async function getStaticPaths() {
   const paths = [];
   
-  // 添加分类页面路径
+  // Add category page paths
   companyCategories.forEach(category => {
     paths.push({
       params: { slug: category.slug },
@@ -18,7 +18,7 @@ export async function getStaticPaths() {
     });
   });
 
-  // 添加公司详情页面路径
+  // Add company detail page paths
   companies.forEach(company => {
     paths.push({
       params: { slug: `detail/${company.id}` },
@@ -26,7 +26,7 @@ export async function getStaticPaths() {
     });
   });
 
-  // 添加联系页面路径
+  // Add contact page paths
   companies.forEach(company => {
     paths.push({
       params: { slug: `detail/${company.id}/contact` },
@@ -43,7 +43,7 @@ const { type, company, category, categories } = Astro.props;
 <BaseLayout
   title={type === 'category' ? `${category.name} - ${SITE_TITLE}` : 
          type === 'detail' ? `${company.name} - ${SITE_TITLE}` :
-         `联系 ${company.name} - ${SITE_TITLE}`}
+         `Contact ${company.name} - ${SITE_TITLE}`}
   description={SITE_DESCRIPTION}
   categories={categories}
   basePath="/companies"
@@ -57,7 +57,7 @@ const { type, company, category, categories } = Astro.props;
             <input 
               type="text" 
               id="company-search" 
-              placeholder="搜索公司..."
+              placeholder="Search companies..."
               class="px-4 py-2 rounded-lg border border-gray-200 focus:border-accent focus:ring-2 focus:ring-accent focus:ring-opacity-20 transition-all duration-200"
             />
           </div>
@@ -77,25 +77,25 @@ const { type, company, category, categories } = Astro.props;
       <div class="detail-card">
         <h2 class="text-2xl font-bold mb-4">{company.name}</h2>
         
-        <!-- 基本信息表格 -->
+        <!-- Basic Information Table -->
         <div class="box-card">
           <div class="grid md:grid-cols-2 gap-6">
             <div>
               <table class="info-table">
                 <tbody>
                   <tr>
-                    <th>公司名称</th>
+                    <th>Company Name</th>
                     <td>{company.name}</td>
                   </tr>
                   {company.contact?.phone && (
                     <tr>
-                      <th>联系电话</th>
+                      <th>Phone</th>
                       <td>{company.contact.phone}</td>
                     </tr>
                   )}
                   {company.contact?.email && (
                     <tr>
-                      <th>邮箱</th>
+                      <th>Email</th>
                       <td>
                         <div class="flex items-center">
                           <i class="icon-message">📧</i>
@@ -108,25 +108,25 @@ const { type, company, category, categories } = Astro.props;
                   )}
                   {company.contact?.address && (
                     <tr>
-                      <th>地址</th>
+                      <th>Address</th>
                       <td>{company.contact.address}</td>
                     </tr>
                   )}
                   {company.industry && (
                     <tr>
-                      <th>行业</th>
+                      <th>Industry</th>
                       <td>{company.industry}</td>
                     </tr>
                   )}
                   {company.leader && (
                     <tr>
-                      <th>负责人</th>
+                      <th>Leader</th>
                       <td>{company.leader}</td>
                     </tr>
                   )}
                   {company.website && (
                     <tr>
-                      <th>网址</th>
+                      <th>Website</th>
                       <td>
                         <a href={company.website} target="_blank" rel="noopener noreferrer" 
                           class="text-blue-600 hover:underline">
@@ -141,28 +141,28 @@ const { type, company, category, categories } = Astro.props;
 
             <div class="company-intro-card">
               <div class="card-header">
-                <h3 class="text-xl font-bold">公司简介</h3>
+                <h3 class="text-xl font-bold">Company Introduction</h3>
               </div>
-              <p class="company-intro">{company.description || '暂无'}</p>
+              <p class="company-intro">{company.description || 'None'}</p>
             </div>
           </div>
         </div>
 
-        <!-- 公司历史 -->
+        <!-- Company History -->
         {company.history && (
           <div class="box-card mt-5">
             <div class="card-header">
-              <h3 class="text-xl font-bold">公司历史</h3>
+              <h3 class="text-xl font-bold">Company History</h3>
             </div>
             <p class="company-history">{company.history}</p>
           </div>
         )}
 
-        <!-- 产品列表 -->
+        <!-- Product List -->
         {company.products && company.products.length > 0 && (
           <div class="box-card mt-5">
             <div class="card-header">
-              <h3 class="text-xl font-bold">产品列表</h3>
+              <h3 class="text-xl font-bold">Product List</h3>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
               {company.products.map(product => (
@@ -175,11 +175,11 @@ const { type, company, category, categories } = Astro.props;
           </div>
         )}
 
-        <!-- 公司新闻 -->
+        <!-- Company News -->
         {company.news && company.news.length > 0 && (
           <div class="box-card mt-5">
             <div class="card-header">
-              <h3 class="text-xl font-bold">公司新闻</h3>
+              <h3 class="text-xl font-bold">Company News</h3>
             </div>
             <div class="news-grid">
               {company.news.map(item => (
@@ -246,7 +246,7 @@ const { type, company, category, categories } = Astro.props;
             </div>
 
             <div class="space-y-6">
-              <h2 class="text-xl font-bold text-gray-800 mb-6">发送邮件</h2>
+              <h2 class="text-xl font-bold text-gray-800 mb-6">Send Email</h2>
               <ContactForm 
                 companyEmail={company.contact?.email}
                 companyName={company.name}
@@ -276,7 +276,7 @@ const { type, company, category, categories } = Astro.props;
     }
   }
 
-  /* 联系页面样式 */
+  /* Contact page styles */
   .company-logo {
     @apply w-12 h-12 flex items-center justify-center bg-blue-100 text-blue-600 rounded-lg text-2xl font-bold;
   }

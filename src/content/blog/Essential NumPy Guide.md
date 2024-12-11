@@ -2,7 +2,7 @@
 title: 'Essential NumPy Guide'
 description: 'A comprehensive guide to NumPy fundamentals for scientific computing and data analysis'
 pubDate: 'Jun 25 2024'
-heroImage: '/d8331d63d6fc4fd09ed27b0f283adc36.png'
+heroImage: '/images/d8331d63d6fc4fd09ed27b0f283adc36.png'
 category: 'data-science'
 ---
 

@@ -4,13 +4,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
 import { blogCategories } from '../../data/categories';
+import Footer from '../../components/Footer.astro';
 
 const posts = (await getCollection('blog'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
 <BaseLayout 
-  title={`blob - ${SITE_TITLE}`}
+  title={`Blog - ${SITE_TITLE}`}
   description={SITE_DESCRIPTION}
   categories={blogCategories}
   basePath="/blog"
@@ -31,6 +32,7 @@ const posts = (await getCollection('blog'))
       ))}
     </ul>
   </section>
+  <Footer />
 </BaseLayout>
 
 <style>
