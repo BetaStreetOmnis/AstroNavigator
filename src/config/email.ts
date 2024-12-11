@@ -1,4 +1,3 @@
-```typescript
 export interface EmailConfig {
   smtp: {
     host: string;
@@ -19,7 +18,7 @@ export interface EmailConfig {
   };
 }
 
-export const emailConfig: EmailConfig = {
+export const emailConfig = {
   smtp: {
     host: 'smtp.example.com',
     port: 587,
@@ -30,12 +29,11 @@ export const emailConfig: EmailConfig = {
     }
   },
   company: {
-    name: 'haomiaodata',
-    email: 'ch824783054@gmail.com',
-    website: 'https://haomiaodata.com',
-    address: '123 Business Street, City, Country',
-    phone: '+1 234 567 890',
-    logo: '/company-logo.png'
+    name: 'BetaStreetOmnis',
+    email: 'contact@example.com',
+    logo: '/logo.png',
+    website: 'https://example.com',
+    address: 'Your Address',
+    phone: '+1234567890'
   }
 };
-```

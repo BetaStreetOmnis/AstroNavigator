@@ -1,0 +1,42 @@
+[33mcommit 871eab28dfbdaaa67a400c9e84c972e4f9139dae[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: BetaStreetOmnis <ch824783054@gmail.com>
+Date:   Wed Dec 11 16:22:27 2024 +0800
+
+    change package
+
+[33mcommit 0b3a32a1cf660aa6e4dd558ed6f9fbe0e2f95776[m
+Author: BetaStreetOmnis <ch824783054@gmail.com>
+Date:   Wed Dec 11 15:36:26 2024 +0800
+
+    change tsconfig
+
+[33mcommit b54dea4b1edf28198fcf454357f75a83bbe7af2e[m
+Author: BetaStreetOmnis <ch824783054@gmail.com>
+Date:   Wed Dec 11 10:23:27 2024 +0800
+
+    change readme
+
+[33mcommit afa3bf4a485599b6c08c6bb1cad5cb0bb89bac2b[m
+Author: BetaStreetOmnis <ch824783054@gmail.com>
+Date:   Wed Dec 11 10:19:38 2024 +0800
+
+    change readme
+
+[33mcommit 2d84f4c7c85dcf5ff383581444ba9ad811d2c4d2[m
+Merge: 320caf0 8b0ebd4
+Author: BetaStreetOmnis <ch824783054@gmail.com>
+Date:   Tue Dec 10 23:43:06 2024 +0800
+
+    Merge branch 'main' of github.com:BetaStreetOmnis/AstroNavigator
+
+[33mcommit 320caf0db47fd6888db500f90c0e48eca1e639ca[m
+Author: BetaStreetOmnis <ch824783054@gmail.com>
+Date:   Tue Dec 10 23:39:39 2024 +0800
+
+    Initial commit
+
+[33mcommit 8b0ebd4356ff8d173d43e10cea569794ad6c06e0[m
+Author: BetaStreetOmnis <156061924+BetaStreetOmnis@users.noreply.github.com>
+Date:   Tue Dec 10 23:18:41 2024 +0800
+
+    Initial commit
