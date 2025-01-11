@@ -14,13 +14,7 @@ export const linkCategories: Category[] = [
   { name: 'Design Resources', slug: 'design', description: 'Design tools and inspiration' },
 ];
 
-export const messageCategories: Category[] = [
-  { name: 'AI News', slug: 'ai-news', description: 'Latest updates in artificial intelligence' },
-  { name: 'Development Updates', slug: 'dev-updates', description: 'Development tools and technology updates' },
-  { name: 'Data Science', slug: 'data-science', description: 'Data science and analytics news' },
-  { name: 'Security Updates', slug: 'security', description: 'Security vulnerabilities and patch notifications' },
-  { name: 'Cloud Computing', slug: 'cloud', description: 'Cloud services and infrastructure updates' }
-];
+export const messageCategories: Category[] = [{name: "半导体", slug: "半导体", description: "半导体"}, {name: "其他", slug: "其他", description: "其他"}, {name: "政府", slug: "政府", description: "政府"}, {name: "工程建设", slug: "工程建设", description: "工程建设"}, {name: "综合行业", slug: "综合行业", description: "综合行业"}, {name: "None", slug: "None", description: "None"}, {name: "贸易行业", slug: "贸易行业", description: "贸易行业"}, {name: "互联网服务", slug: "互联网服务", description: "互联网服务"}];
 
 export const companyCategories: Category[] = [
   {
