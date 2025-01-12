@@ -14,7 +14,7 @@ export const linkCategories: Category[] = [
   { name: 'Design Resources', slug: 'design', description: 'Design tools and inspiration' },
 ];
 
-export const messageCategories: Category[] = [{name: "半导体", slug: "半导体", description: "半导体"}, {name: "其他", slug: "其他", description: "其他"}, {name: "政府", slug: "政府", description: "政府"}, {name: "工程建设", slug: "工程建设", description: "工程建设"}, {name: "综合行业", slug: "综合行业", description: "综合行业"}, {name: "None", slug: "None", description: "None"}, {name: "贸易行业", slug: "贸易行业", description: "贸易行业"}, {name: "互联网服务", slug: "互联网服务", description: "互联网服务"}];
+export const messageCategories: Category[] = [{name: "None", slug: "None", description: "None"}, {name: "政府", slug: "政府", description: "政府"}, {name: "其他", slug: "其他", description: "其他"}, {name: "互联网服务", slug: "互联网服务", description: "互联网服务"}, {name: "工程建设", slug: "工程建设", description: "工程建设"}, {name: "半导体", slug: "半导体", description: "半导体"}, {name: "贸易行业", slug: "贸易行业", description: "贸易行业"}, {name: "综合行业", slug: "综合行业", description: "综合行业"}];
 
 export const companyCategories: Category[] = [
   {
